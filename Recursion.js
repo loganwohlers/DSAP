@@ -7,7 +7,6 @@ function fibonacciRecursive(n) {
 
 }
 
-
 function findFactorialRecursive(number) {
     if (number < 2) {
         return 1;

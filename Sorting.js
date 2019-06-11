@@ -130,3 +130,22 @@ function merge(left, right) {
     return result.concat(left.slice(leftIndex)).concat(right.slice(rightIndex));
 }
 /////////////////////////////////////
+
+//merge re-written
+mergeSortedArrays = (a, b) => {
+    let aPointer = 0
+    let bPointer = 0
+    let merged = []
+    while (a[aPointer] !== undefined || b[bPointer] !== undefined) {
+        if (b[bPointer] === undefined || a[aPointer] <= b[bPointer]) {
+            merged.push(a[aPointer])
+            aPointer++;
+        } else {
+            merged.push(b[bPointer])
+            bPointer++
+        }
+    }
+    return merged
+}
+
+mergeSortedArrays([0, 3, 4, 31], [3, 4, 6, 30]);
