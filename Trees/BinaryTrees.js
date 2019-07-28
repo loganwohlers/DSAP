@@ -9,19 +9,6 @@ class BinaryTree {
     constructor() {
         this.root = null
     }
-    //don't we want a private method to do this recursively?
-    addNode(node, value) {
-        if (!node) {
-            node = new TreeNode(value)
-            return node
-        }
-        if (value < node.value) {
-            node.left = this.addNode(node.left, value)
-        } else {
-            node.right = this.addNode(node.right, value)
-        }
-        return node
-    }
 
     searchNode(node, value) {
         if (!node) {
@@ -44,14 +31,61 @@ class BinaryTree {
         return this
     }
 
+    addNode(node, value) {
+        if (!node) {
+            node = new TreeNode(value)
+            return node
+        }
+        if (value < node.value) {
+            node.left = this.addNode(node.left, value)
+        } else {
+            node.right = this.addNode(node.right, value)
+        }
+        return node
+    }
+
     searchValue(value) {
         return this.searchNode(this.root, value)
+    }
+
+
+    printLevel(level) {
+        let currLevel = 1
+    }
+
+    getHeight() {
+        console.log(this.heightHelper(this.root))
+    }
+
+    heightHelper(node) {
+        if (node === null)
+            return 0;
+        else {
+            /* compute  height of each subtree */
+            let lheight = this.heightHelper(node.left);
+            let rheight = this.heightHelper(node.right);
+            console.log(lheight, rheight)
+            /* use the larger one */
+            return 1 + Math.max(lheight, rheight)
+        }
+    }
+    constructTree(arr) {
+        this.root = this.buildFromArr(arr, this.root, 0)
+    }
+
+    buildFromArr(arr, node, i) {
+        if (i < arr.length) {
+            let temp = new TreeNode(arr[i])
+            node = temp
+            node.left = this.buildFromArr(arr, node.left, 2 * i + 1)
+            node.right = this.buildFromArr(arr, node.right, 2 * i + 2)
+        }
+        return node;
     }
 
     breadthFirst() {
         let queue = []
         let values = []
-
         queue.push(this.root)
         while (queue.length !== 0) {
             let curr = queue.shift()
@@ -64,6 +98,7 @@ class BinaryTree {
                 queue.push(curr.right)
             }
         }
+        console.log(values)
         return values
     }
 
@@ -73,6 +108,7 @@ class BinaryTree {
 
     printPreOrderNode(node) {
         if (node !== null) {
+            console.log(node.value)
             this.printPreOrderNode(node.left)
             this.printPreOrderNode(node.right)
         }
@@ -104,17 +140,13 @@ class BinaryTree {
 
 }
 
-let tree = new BinaryTree()
-tree.insert(10)
-tree.insert(6)
-tree.insert(15)
-tree.insert(8)
-tree.insert(20)
+let tree2 = new BinaryTree()
+tree2.constructTree([1, 2, 3, 4, 5])
 
-tree.breadthFirst()
-tree.printPreOrder()
-console.log()
-tree.printInOrder()
-console.log()
-tree.printPostOrder()
+tree2.breadthFirst()
+// tree.getHeight()
+// tree2.printPreOrder()
+// console.log()
+// console.log()
+// tree.printPostOrder()
 
